@@ -5,7 +5,7 @@ pipeline {
         GITHUB_REPO = 'https://github.com/DevOpsByNavin/blogapp-17.git'
         HARBOR_REGISTRY = 'harbor.nabinpoudel004.com.np'
         HARBOR_PROJECT = 'blog-app'
-        HARBOR_USER = 'robot$harbor-robot'
+        HARBOR_USER = 'admin'
         EC2_USER = 'admin'
         EC2_HOST = '13.126.240.245'
         EC2_WORKDIR = 'BlogApp'
