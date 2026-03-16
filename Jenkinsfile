@@ -87,6 +87,11 @@ pipeline {
                                 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${EC2_USER}@${EC2_HOST}" "
                                     ls
                                     cd ${EC2_WORKDIR}
+                                    cat > .env <<EOF
+BACKEND1_IMG=${BACKEND1_IMG}
+BACKEND2_IMG=${BACKEND2_IMG}
+NGINX_IMG=${NGINX_IMG}
+EOF
 
                                 "
                     '''
