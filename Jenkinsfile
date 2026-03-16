@@ -82,9 +82,13 @@ pipeline {
                 sshagent(credentials: ['deploy-ec2-key']) {
                         withCredentials([string(credentialsId: 'harbor', variable: 'HARBOR_API_KEY')]) {
                             sh '''
+                                set -euo pipefall
+
                                 scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null docker-compose.yml ${EC2_USER}@${EC2_HOST}:${EC2_WORKDIR}/docker-compose.yml
 
                                 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${EC2_USER}@${EC2_HOST}" "
+                                    set -euo pipefall
+                                    
                                     cd ${EC2_WORKDIR}
 
                                     cat > .env <<EOF
@@ -94,8 +98,9 @@ NGINX_IMG=${NGINX_IMG}
 EOF
                                     docker compose config
                                     echo ${HARBOR_API_KEY} | docker login ${HARBOR_REGISTRY} --username ${HARBOR_USER} --password-stdin
-                                    docker compose up -d --force-recreate --remove-orphans
-                                    docker image prune -f
+                                    docker compose down --remove-orphans
+                                    docker compose up -d
+                                    docker image prune -f -a
                                     docker logout ${HARBOR_REGISTRY}
                                 "
                     '''
