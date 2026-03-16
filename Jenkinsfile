@@ -87,11 +87,14 @@ pipeline {
                                 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${EC2_USER}@${EC2_HOST}" "
                                     cd ${EC2_WORKDIR}
 
+                                    ls
+
                                     cat > .env <<EOF
 BACKEND1_IMG=${BACKEND1_IMG}
 BACKEND2_IMG=${BACKEND2_IMG}
 NGINX_IMG=${NGINX_IMG}
 EOF
+                                    ls -la
                                     docker compose config
                                     echo ${HARBOR_API_KEY} | docker login ${HARBOR_REGISTRY} --username ${HARBOR_USER} --password-stdin
                                     docker compose down --remove-orphans
