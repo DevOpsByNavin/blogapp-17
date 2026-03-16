@@ -82,7 +82,7 @@ pipeline {
                 sshagent(credentials: ['deploy-ec2-key']) {
                         withCredentials([string(credentialsId: 'harbor', variable: 'HARBOR_API_KEY')]) {
                             sh '''
-                                scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null docker-compose.yml ${DEPLOY_USER}@${DEPLOY_HOST}:${EC2_WORKDIR}/docker-compose.yml
+                                scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null docker-compose.yml ${EC2_USER}@${EC2_HOST}:${EC2_WORKDIR}/docker-compose.yml
 
                                 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${EC2_USER}@${EC2_HOST}" "
                                     cd ${EC2_WORKDIR}
