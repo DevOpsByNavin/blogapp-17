@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:17-alpine
-    container_name: postgres
+    container_name: blog-postgres
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
@@ -15,7 +15,7 @@ services:
    
   backend1:
     image: ${BACKEND1_IMG}
-    container_name: backend1
+    container_name: blog-backend1
     restart: unless-stopped
     env_file:
       - /home/admin/data/backend1/.env
@@ -27,7 +27,7 @@ services:
 
   backend2:
     image: ${BACKEND2_IMG}
-    container_name: backend2
+    container_name: blog-backend2
     restart: unless-stopped
     env_file:
       - /home/admin/data/backend2/.env
@@ -39,7 +39,7 @@ services:
 
   nginx:
     image: ${NGINX_IMG}
-    container_name: nginx
+    container_name: blog-nginx
     restart: unless-stopped
     ports:
       - "80:80"
