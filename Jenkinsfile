@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         GITHUB_REPO = 'https://github.com/DevOpsByNavin/blogapp-17.git'
-        HARBOR_REGISTERY = 'harbor.nabinpoudel004.com.np'
+        HARBOR_REGISTRY = 'harbor.nabinpoudel004.com.np'
         HARBOR_PROJECT = 'blog-app'
         HARBOR_USER = 'robot$harbor-robot'
         EC2_USER = 'admin'
@@ -21,14 +21,14 @@ pipeline {
         stage("Image Naming") {
             steps {
                 script {
-                    env.BACKEND1_IMG = "${HARBOR_REGISTERY}/${HARBOR_PROJECT}/blog-backend1:${BUILD_NUMBER}"
-                    env.BACKEND1_LATEST = "${HARBOR_REGISTERY}/${HARBOR_PROJECT}/blog-backend1:latest"
+                    env.BACKEND1_IMG = "${HARBOR_REGISTRY}/${HARBOR_PROJECT}/blog-backend1:${BUILD_NUMBER}"
+                    env.BACKEND1_LATEST = "${HARBOR_REGISTRY}/${HARBOR_PROJECT}/blog-backend1:latest"
 
-                    env.BACKEND2_IMG = "${HARBOR_REGISTERY}/${HARBOR_PROJECT}/blog-backend2:${BUILD_NUMBER}"
-                    env.BACKEND2_LATEST = "${HARBOR_REGISTERY}/${HARBOR_PROJECT}/blog-backend2:latest"
+                    env.BACKEND2_IMG = "${HARBOR_REGISTRY}/${HARBOR_PROJECT}/blog-backend2:${BUILD_NUMBER}"
+                    env.BACKEND2_LATEST = "${HARBOR_REGISTRY}/${HARBOR_PROJECT}/blog-backend2:latest"
 
-                    env.NGINX_IMG = "${HARBOR_REGISTERY}/${HARBOR_PROJECT}/blog-nginx:${BUILD_NUMBER}"
-                    env.NGINX_LATEST = "${HARBOR_REGISTERY}/${HARBOR_PROJECT}/blog-nginx:latest"
+                    env.NGINX_IMG = "${HARBOR_REGISTRY}/${HARBOR_PROJECT}/blog-nginx:${BUILD_NUMBER}"
+                    env.NGINX_LATEST = "${HARBOR_REGISTRY}/${HARBOR_PROJECT}/blog-nginx:latest"
                 }
             }
         }
@@ -59,7 +59,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'harbor', variable: 'HARBOR_API_KEY')]) {
 
                     sh '''
-                        echo "${HARBOR_API_KEY}" | docker login "${HARBOR_REGISTERY}" --username "${HARBOR_USER}" --password-stdin
+                        echo "${HARBOR_API_KEY}" | docker login "${HARBOR_REGISTRY}" --username "${HARBOR_USER}" --password-stdin
 
                         docker push "${BACKEND1_IMG}"
                         docker push "${BACKEND1_LATEST}"
@@ -70,7 +70,7 @@ pipeline {
                         docker push "${NGINX_IMG}"
                         docker push "${NGINX_LATEST}"
 
-                        docker logout "${HARBOR_REGISTERY}"
+                        docker logout "${HARBOR_REGISTRY}"
                     '''
             }
          }
@@ -86,10 +86,17 @@ pipeline {
 
                                 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${EC2_USER}@${EC2_HOST}" "
                                     cd ${EC2_WORKDIR}
-                                    echo ${HARBOR_API_KEY} | docker login ${HARBOR_REGISTERY} --username ${HARBOR_USER} --password-stdin
+
+                                    cat > .env <<EOF
+BACKEND1_IMG=${BACKEND1_IMG}
+BACKEND2_IMG=${BACKEND2_IMG}
+NGINX_IMG=${NGINX_IMG}
+EOF
+
+                                    echo ${HARBOR_API_KEY} | docker login ${HARBOR_REGISTRY} --username ${HARBOR_USER} --password-stdin
                                     docker compose up -d --force-recreate --remove-orphans
                                     docker image prune -f
-                                    docker logout ${HARBOR_REGISTERY}
+                                    docker logout ${HARBOR_REGISTRY}
                                 "
                     '''
                     }

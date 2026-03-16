@@ -20,7 +20,7 @@ services:
     env_file:
       - /home/admin/data/backend1/.env
     depends_on:
-      postgres:
+      - postgres
     networks:
       - blog-network
 
@@ -32,7 +32,7 @@ services:
     env_file:
       - /home/admin/data/backend2/.env
     depends_on:
-      postgres:
+      - postgres
     networks:
       - blog-network
 
@@ -44,8 +44,8 @@ services:
     ports:
       - "80:80"
     depends_on:
-      backend1:
-      backend2:
+      - backend1
+      - backend2
     networks:
       - blog-network
 
