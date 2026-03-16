@@ -93,9 +93,13 @@ BACKEND2_IMG=${BACKEND2_IMG}
 NGINX_IMG=${NGINX_IMG}
 EOF
 
-                                ls -la
                                 docker compose config
                                 printf '%s' '${HARBOR_API_KEY}' | docker login '${HARBOR_REGISTRY}' --username '${HARBOR_USER}' --password-stdin
+
+                                docker compose down --remove-orphans
+                                docker compose up -d
+                                docker image prune -f -a
+                                docker logout ${HARBOR_REGISTRY}                               
                                 "
                     '''
                     }
