@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: blogapp-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - /home/admin/data/nginx/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+    networks:
+      - blog-network
+
+   
+  backend1:
+    image: ${BACKEND1_IMG}
+   con 
