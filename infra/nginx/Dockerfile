@@ -9,7 +9,6 @@ RUN npm run build
 FROM nginx:alpine
 
 RUN rm /etc/nginx/conf.d/default.conf
-RUN mkdir -p /etc/nginx/ssl
 COPY infra/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/dist /var/www/blog-app
 EXPOSE 80
