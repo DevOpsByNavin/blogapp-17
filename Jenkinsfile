@@ -84,7 +84,7 @@ pipeline {
                             sh '''
                                 scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null docker-compose.yml ${DEPLOY_USER}@${DEPLOY_HOST}:${EC2_WORKDIR}/docker-compose.yml
 
-                                ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${EC2_USER}@${EC2_HOST} "
+                                ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${EC2_USER}@${EC2_HOST}" "
                                     cd ${EC2_WORKDIR}
                                     echo ${HARBOR_API_KEY} | docker login ${HARBOR_REGISTERY} --username ${HARBOR_USER} --password-stdin
                                     docker compose up -d --force-recreate --remove-orphans
