@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         GITHUB_REPO = 'https://github.com/DevOpsByNavin/blogapp-17.git'
-        HARBOR_REGISTERY = 'harbor.nabinpoudel004.com.np/'
+        HARBOR_REGISTERY = 'harbor.nabinpoudel004.com.np'
         HARBOR_PROJECT = 'blog-app'
         HARBOR_USER = 'robot$harbor-robot'
         EC2_USER = 'admin'
