@@ -20,21 +20,24 @@ pipeline {
         
         stage("OWASP dependency check") {
             steps {
+                
+                withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
+                    sh '''
+                        mkdir -p odc-report
 
-
-                sh '''
-                    mkdir -p odc-report
-
-                    docker run --rm \
-                        --volume "$WORKSPACE":/src:z \
-                        owasp/dependency-check:latest \
-                        --format HTML \
-                        --format XML \
-                        --scan /src/services/backend1 \
-                        --scan /src/services/backend2 \
-                        --scan /src/services/frontend \
-                        --out odc-report
+                        docker run --rm \
+                            --volume "$WORKSPACE":/src:z \
+                            --volume "$WORKSPACE"/odc-report:/report:z \
+                            -e NVD_API_KEY="${NVD_API_KEY}" \
+                            owasp/dependency-check:latest \
+                            --format HTML \
+                            --format XML \
+                            --scan /src/services/backend1 \
+                            --scan /src/services/backend2 \
+                            --scan /src/services/frontend \
+                            --out odc-report
                 '''
+                }
             }
         }
 
