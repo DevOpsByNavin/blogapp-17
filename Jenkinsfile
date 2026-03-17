@@ -21,7 +21,7 @@ pipeline {
         stage("OWASP dependency check") {
             steps {
 
-                mkdir dependency-check-report
+                sh mkdir dependency-check-report
 
                 sh '''
                     docker run --rm \
