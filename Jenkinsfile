@@ -42,6 +42,22 @@ pipeline {
             }
         }
 
+        stage("SonarQube analysis") {
+            steps {
+                withSonarQubeEnv('sonarqube-server') {
+
+                }
+            }
+        }
+
+        stage("SonarQube Quality Gate") {
+            steps {
+                timeout(time:30, unit:'MINUTES') {
+                    waitForQualityGate abortPipeline: false
+                }
+            }
+        }
+
         stage("Image Naming") {
             steps {
                 script {
