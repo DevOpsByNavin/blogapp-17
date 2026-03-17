@@ -21,17 +21,18 @@ pipeline {
         stage("OWASP dependency check") {
             steps {
 
-                sh mkdir dependency-check-report
 
                 sh '''
+                    mkdir odc-report
+
                     docker run --rm \
-                        --volume "$WORKSPACE":/src \
+                        --volume "$WORKSPACE":/src:z \
                         --format HTML \
                         --format XML \
                         --scan /src/services/backend1 \
                         --scan /src/services/backend2 \
                         --scan /src/services/frontend \
-                        --out dependency-check-report
+                        --out odc-report
                 '''
             }
         }
