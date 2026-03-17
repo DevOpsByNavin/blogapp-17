@@ -23,7 +23,7 @@ pipeline {
 
 
                 sh '''
-                    mkdir odc-report
+                    mkdir -p odc-report
 
                     docker run --rm \
                         --volume "$WORKSPACE":/src:z \
