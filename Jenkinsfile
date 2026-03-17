@@ -18,6 +18,24 @@ pipeline {
             }
         }
         
+        stage("OWASP dependency check") {
+            steps {
+
+                mkdir dependency-check-report
+
+                sh '''
+                    docker run --rm \
+                        --volume "$WORKSPACE":/src \
+                        --format HTML \
+                        --format XML \
+                        --scan /src/services/backend1 \
+                        --scan /src/services/backend2 \
+                        --scan /src/services/frontend \
+                        --out dependency-check-report
+                '''
+            }
+        }
+
         stage("Image Naming") {
             steps {
                 script {
