@@ -35,6 +35,7 @@ pipeline {
                             --scan /src/services/backend1 \
                             --scan /src/services/backend2 \
                             --scan /src/services/frontend \
+                            --nvdApiKey "${NVD_API_KEY}" \
                             --out odc-report
                 '''
                 }
