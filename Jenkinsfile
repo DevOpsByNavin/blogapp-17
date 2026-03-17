@@ -27,6 +27,7 @@ pipeline {
 
                     docker run --rm \
                         --volume "$WORKSPACE":/src:z \
+                        owasp/dependency-check:latest \
                         --format HTML \
                         --format XML \
                         --scan /src/services/backend1 \
