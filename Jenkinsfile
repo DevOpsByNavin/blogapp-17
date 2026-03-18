@@ -53,9 +53,9 @@ pipeline {
                         additionalArguments: '''
                             --format HTML
                             --format XML
-                            --scan /src/services/backend1 
-                            --scan /src/services/backend2 
-                            --scan /src/services/frontend
+                            --scan ./services/backend1 
+                            --scan ./services/backend2 
+                            --scan ./services/frontend
                             --out odc-report
                             --nvdApiKey ${NVD_API_KEY}
                     ''')
