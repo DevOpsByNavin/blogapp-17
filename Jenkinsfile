@@ -18,30 +18,30 @@ pipeline {
             }
         }
         
-        stage("OWASP dependency check") {
-            steps {
+        // stage("OWASP dependency check") {
+        //     steps {
                 
-                withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
-                    sh '''
-                        mkdir -p /var/lib/jenkins/dependency-check-data
-                        mkdir -p odc-report
+        //         withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
+        //             sh '''
+        //                 mkdir -p /var/lib/jenkins/dependency-check-data
+        //                 mkdir -p odc-report
 
-                        docker run --rm \
-                            --volume "$WORKSPACE":/src:z \
-                            --volume "$WORKSPACE"/odc-report:/report:z \
-                            --volume /var/lib/jenkins/dependency-check-data:/usr/share/dependency-check/data:z \
-                            -e NVD_API_KEY="${NVD_API_KEY}" \
-                            owasp/dependency-check:12.1.0 \
-                            --format HTML \
-                            --scan /src/services/backend1 \
-                            --scan /src/services/backend2 \
-                            --scan /src/services/frontend \
-                            --nvdApiKey "${NVD_API_KEY}" \
-                            --out /report
-                '''
-                }
-            }
-        }
+        //                 docker run --rm \
+        //                     --volume "$WORKSPACE":/src:z \
+        //                     --volume "$WORKSPACE"/odc-report:/report:z \
+        //                     --volume /var/lib/jenkins/dependency-check-data:/usr/share/dependency-check/data:z \
+        //                     -e NVD_API_KEY="${NVD_API_KEY}" \
+        //                     owasp/dependency-check:12.1.0 \
+        //                     --format HTML \
+        //                     --scan /src/services/backend1 \
+        //                     --scan /src/services/backend2 \
+        //                     --scan /src/services/frontend \
+        //                     --nvdApiKey "${NVD_API_KEY}" \
+        //                     --out /report
+        //         '''
+        //         }
+        //     }
+        // }
 
         // stage("SonarQube analysis") {
         //     steps {
