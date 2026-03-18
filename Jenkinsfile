@@ -43,6 +43,24 @@ pipeline {
         //     }
         // }
 
+        stage("OWASP dependency check") {
+            steps {
+                withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
+                    sh 'mdkir -p odc-report'
+
+                    dependencyCheck additionalArguments: '''
+                        --format HTML
+                        --format XML
+                        --scan /src/services/backend1 
+                        --scan /src/services/backend2 
+                        --scan /src/services/frontend
+                        --out odc-report
+                        --nvdApiKey ${NVD_API_KEY}
+                    '''
+                }
+            }
+        }
+
         // stage("SonarQube analysis") {
         //     steps {
         //         withSonarQubeEnv('sonarqube-server') {
