@@ -87,7 +87,7 @@ pipeline {
                     -t "$BACKEND2_LATEST" \
                     -f services/backend2/Dockerfile .
                     
-                    cat > services/frontend/.env.production <<EOF
+                    cat > services/frontend/.env <<EOF
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_ZW5nYWdlZC1mbHktMzMuY2xlcmsuYWNjb3VudHMuZGV2JA
 VITE_API_URL=http://13.126.240.245
 EOF
