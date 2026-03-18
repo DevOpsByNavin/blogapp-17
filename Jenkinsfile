@@ -46,7 +46,7 @@ pipeline {
         stage("Install Dependenc for ODC") {
             steps {
                 sh '''
-                    (cd services/frontend && npm ci)
+                    (cd services/frontend && npm ci --legacy-peer-deps)
                     (cd services/backend1 && npm ci)
                     (cd services/backend2 && npm ci)
                 '''
