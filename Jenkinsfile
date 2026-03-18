@@ -44,11 +44,13 @@ pipeline {
         // }
 
         stage("Install Dependenc for ODC") {
-            sh '''
-                (cd services/frontend && npm ci)
-                (cd services/backend1 && npm ci)
-                (cd services/backend2 && npm ci)
-            '''
+            steps {
+                sh '''
+                    (cd services/frontend && npm ci)
+                    (cd services/backend1 && npm ci)
+                    (cd services/backend2 && npm ci)
+                '''
+            }
         }
 
         stage("OWASP dependency check") {
