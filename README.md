@@ -1,42 +1,28 @@
-# Blog App — Personal Fork
+# Project
 
-This repository is a personal working fork of the original project.
+![task](docs/assets/task.drawio.png)
 
-Purpose:
+A comprehensive project on deploying a [blog-app](https://github.com/DevOpsByNavin/Blog-App.git) site through `jenkins` CI/CD pipeline.
 
-* Use as a reusable base for tasks, experiments, and small projects
-* Modify freely without affecting upstream
-* Keep a stable starting point I understand
+## Outcome Workflow
 
-## How I Use This Repo
+1. Developer commit new changes on github repo
+2. It triggers webhook to Jenkins pipeline.
+3. Inside pipeline, performs dependency check
+4. Perform SonarQube analysis and wait for Quality Gate webhook trigger from SonarQube server to continue next pipeline.
+3. It then gonna build three images for `backend1`, `backend2` and `nginx`.
+4. Images are then pushed to `Harbor` server with proper tagging.
+5. Then it gonna `SSH` to deployment server.
+6. Pull latest images from `Harbor`
+7. Take down old versioned docker container and spin up latest container from updated images.
 
-I clone this repo whenever I need a ready‑to‑go application skeleton instead of rebuilding the same setup repeatedly.
 
-```
-git clone https://github.com/DevOpsByNavin/Blog-App.git
-```
+## Tools used:
 
-Then I customize per project as needed.
+- Jenkins
+- Harbor
+- SonarQube
+- Amazon EC2 or any other public VPS's
+- OWASP Dependency Tracker
 
-## Repo Structure
 
-```bash
-./
-├── infra
-│   └── database
-├── README.md
-└── services
-    ├── backend1
-    ├── backend2
-    └── frontend
-```
-
-> Explore each directory’s `README.md` for details about individual components.
-
-## Attribution
-
-This project is based on the original [Blog-App repository](https://github.com/Jenkins-Organization-824/Blog-App).
-
-All credit for the initial implementation and core structure belongs to the original authors. This fork only adapts and maintains a personal working version for reuse and experimentation.
-
-<!-- Useless change to trigger github webhook.>
