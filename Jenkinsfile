@@ -43,7 +43,7 @@ pipeline {
         //     }
         // }
 
-        stage("Install Dependenc for ODC") {
+        stage("Install Dependency for ODC") {
             steps {
                 sh '''
                     (cd services/frontend && npm ci --legacy-peer-deps)
@@ -80,9 +80,13 @@ pipeline {
         }
 
         stage("SonarQube analysis") {
+            environment {
+                SCANNER_HOME = tool 'sonar-scanner'
+            }
+
             steps {
                 withSonarQubeEnv('sonarqube-server') {
-                    sh 'sonar-scanner -Dsonar.projectKey=blogapp-17 -Dsonar.projectName=blogapp-17 -Dsonar.sources=services'
+                    sh "${SCANNER_HOME}/bin/sonar-scanner"
                 }
             }
         }
@@ -127,7 +131,6 @@ pipeline {
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_ZW5nYWdlZC1mbHktMzMuY2xlcmsuYWNjb3VudHMuZGV2JA
 VITE_API_URL=http://13.126.240.245
 EOF
-                    cat services/frontend/.env
 
                     docker build \
                     -t "$NGINX_IMG" \
