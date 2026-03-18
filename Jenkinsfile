@@ -57,19 +57,20 @@ pipeline {
                             --scan ./services/backend2 
                             --scan ./services/frontend
                             --out odc-report
+                            --data var/lib/jenkins/odc-data
                             --nvdApiKey ${NVD_API_KEY}
                     ''')
                 }
             }
         }
 
-        // stage("SonarQube analysis") {
-        //     steps {
-        //         withSonarQubeEnv('sonarqube-server') {
-
-        //         }
-        //     }
-        // }
+        stage("SonarQube analysis") {
+            steps {
+                withSonarQubeEnv('sonarqube-server') {
+                    sh 'sonar-scanner -Dsonar.projectKey=blogapp-17 -Dsonar.projectName=blogapp-17'
+                }
+            }
+        }
 
         // stage("SonarQube Quality Gate") {
         //     steps {
