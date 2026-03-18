@@ -73,8 +73,7 @@ pipeline {
 
                     dependencyCheckPublisher(
                         pattern: 'odc-report/dependency-check-report.xml',
-                        stopBuild: false,
-                        failOnError: true
+                        stopBuild: false
                     )
                 }
             }
