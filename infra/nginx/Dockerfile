@@ -2,7 +2,7 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 COPY services/frontend/package.json ./
-COPY services/frotnend/package-lock.json ./
+COPY services/frotend/package-lock.json ./
 RUN npm ci --legacy-peer-deps
 COPY services/frontend ./
 RUN npm run build
