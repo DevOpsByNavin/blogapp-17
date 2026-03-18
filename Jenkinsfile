@@ -46,7 +46,7 @@ pipeline {
         stage("OWASP dependency check") {
             steps {
                 withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
-                    sh 'mdkir -p odc-report'
+                    sh 'mkdir -p odc-report'
 
                     dependencyCheck (
                         odcInstallation: 'blogapp-17',
