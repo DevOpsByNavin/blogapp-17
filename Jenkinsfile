@@ -37,8 +37,7 @@ pipeline {
                             --scan /src/services/backend2 \
                             --scan /src/services/frontend \
                             --nvdApiKey "${NVD_API_KEY}" \
-                            --out /report \
-                            --log /report/dependency-check.log
+                            --out /report
                 '''
                 }
             }
