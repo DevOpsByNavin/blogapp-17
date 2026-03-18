@@ -31,7 +31,7 @@ pipeline {
                             --volume "$WORKSPACE"/odc-report:/report:z \
                             --volume /var/lib/jenkins/dependency-check-data:/usr/share/dependency-check/data:z \
                             -e NVD_API_KEY="${NVD_API_KEY}" \
-                            owasp/dependency-check:latest \
+                            owasp/dependency-check:12.1.0 \
                             --format HTML \
                             --scan /src/services/backend1 \
                             --scan /src/services/backend2 \
