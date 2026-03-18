@@ -43,6 +43,14 @@ pipeline {
         //     }
         // }
 
+        stage("Install Dependenc for ODC") {
+            sh '''
+                (cd services/frontend && npm ci)
+                (cd services/backend1 && npm ci)
+                (cd services/backend2 && npm ci)
+            '''
+        }
+
         stage("OWASP dependency check") {
             steps {
                 withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
@@ -57,9 +65,15 @@ pipeline {
                             --scan ./services/backend2 
                             --scan ./services/frontend
                             --out odc-report
-                            --data var/lib/jenkins/odc-data
+                            --data /var/lib/jenkins/odc-data
                             --nvdApiKey ${NVD_API_KEY}
                     ''')
+
+                    dependencyCheckPublisher(
+                        pattern: 'odc-report/dependency-check-report.xml',
+                        stopBuild: false,
+                        failOnError: true
+                    )
                 }
             }
         }
@@ -67,7 +81,7 @@ pipeline {
         stage("SonarQube analysis") {
             steps {
                 withSonarQubeEnv('sonarqube-server') {
-                    sh 'sonar-scanner -Dsonar.projectKey=blogapp-17 -Dsonar.projectName=blogapp-17'
+                    sh 'sonar-scanner -Dsonar.projectKey=blogapp-17 -Dsonar.projectName=blogapp-17 -Dsonar.sources=services'
                 }
             }
         }
