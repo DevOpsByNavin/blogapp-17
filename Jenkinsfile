@@ -37,7 +37,7 @@ pipeline {
                             --scan /src/services/backend2 \
                             --scan /src/services/frontend \
                             --nvdApiKey "${NVD_API_KEY}" \
-                            --out /report
+                            --out /report \
                             --log /report/dependency-check.log
                 '''
                 }
@@ -88,7 +88,7 @@ pipeline {
                     -t "$BACKEND2_LATEST" \
                     -f services/backend2/Dockerfile .
                     
-                    cat > services/frontend/.env <<EOF
+                    cat > services/frontend/.env.production <<EOF
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_ZW5nYWdlZC1mbHktMzMuY2xlcmsuYWNjb3VudHMuZGV2JA
 VITE_API_URL=http://13.126.240.245
 EOF
