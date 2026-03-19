@@ -12,11 +12,12 @@ pipeline {
     }
     
     stages {
-        stage("Checkout") {
-            steps {
-                git url: "${GITHUB_REPO}",  branch: 'main'
-            }
-        }
+        
+        // stage("Checkout") {
+        //     steps {
+        //         git url: "${GITHUB_REPO}",  branch: 'main'
+        //     }
+        // }
         
         // stage("OWASP dependency check") {
         //     steps {
