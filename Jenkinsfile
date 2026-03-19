@@ -92,13 +92,13 @@ pipeline {
             }
         }
 
-        // stage("SonarQube Quality Gate") {
-        //     steps {
-        //         timeout(time:30, unit:'MINUTES') {
-        //             waitForQualityGate abortPipeline: false
-        //         }
-        //     }
-        // }
+        stage("SonarQube Quality Gate") {
+            steps {
+                timeout(time:30, unit:'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
 
         stage("Image Naming") {
             steps {
