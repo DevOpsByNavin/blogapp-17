@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - /home/admin/data/nginx/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - /home/admin/data/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks:
       - blog-network
 

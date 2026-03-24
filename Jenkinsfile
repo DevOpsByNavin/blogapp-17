@@ -140,7 +140,21 @@ EOF
                 '''
             }
         }
-        
+
+        stage("Scan image and publish result") {
+            steps {
+                sh "trivy image --format table -o backend1.html ${BACKEND1_IMG}"
+
+            publishHTML(target: [
+                reportFiles: 'backend1.html',
+                reportName: 'trivy-report',
+                allowMissing: true
+            ])
+
+            }
+        }
+
+
         stage("Push image to harbor") {
             steps {
                 withCredentials([string(credentialsId: 'harbor', variable: 'HARBOR_API_KEY')]) {

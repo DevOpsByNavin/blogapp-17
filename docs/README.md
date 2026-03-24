@@ -275,6 +275,8 @@ For that just create a `data` directory with following contents.
 
 > You can create these `.env` file using `.env.example` file from the respective repo.
 
+For `/home/admin/data/postgres/init.sql` file, copy it from `infra/database/init.sql`.
+
 ## 6. Jenkinsfile and docker-compose.yml
 
 Find these file at the top of the [repo](https://github.com/DevOpsByNavin/blogapp-17)
