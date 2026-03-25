@@ -146,7 +146,7 @@ EOF
                 sh "trivy image --format table -o trivy-backend1.html ${BACKEND1_IMG}"
 
             publishHTML(target: [
-                reportDir: './'
+                reportDir: './',
                 reportFiles: 'trivy-backend1.html',
                 reportName: 'trivy-report',
                 allowMissing: false
