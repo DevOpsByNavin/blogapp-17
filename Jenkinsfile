@@ -143,9 +143,10 @@ EOF
 
         stage("Scan image and publish result") {
             steps {
-                sh "trivy image --format template --template "/usr/local/trivy/contrib/html.tpl" -o trivy-backend1.html ${BACKEND1_IMG}"
-                sh "trivy image --format template --template "/usr/local/trivy/contrib/html.tpl" -o trivy-backend2.html ${BACKEND2_IMG}"
-                sh "trivy image --format template --template "/usr/local/trivy/contrib/html.tpl" -o trivy-nginx.html ${NGINX_IMG}"
+                sh 'trivy image --format template --template "/usr/local/trivy/contrib/html.tpl" -o trivy-backend1.html ${BACKEND1_IMG}'
+                sh 'trivy image --format template --template "/usr/local/trivy/contrib/html.tpl" -o trivy-backend2.html ${BACKEND2_IMG}'
+                sh 'trivy image --format template --template "/usr/local/trivy/contrib/html.tpl" -o trivy-nginx.html ${NGINX_IMG}'
+            }
 
             publishHTML(target: [
                 reportDir: './',
@@ -169,7 +170,6 @@ EOF
             ])
 
 
-            }
         }
 
 
