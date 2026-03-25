@@ -147,7 +147,7 @@ EOF
 
             publishHTML(target: [
                 reportDir: './'
-                reportFiles: 'backend1.html',
+                reportFiles: 'trivy-backend1.html',
                 reportName: 'trivy-report',
                 allowMissing: false
             ])
