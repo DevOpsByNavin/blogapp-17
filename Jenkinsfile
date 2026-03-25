@@ -143,28 +143,28 @@ EOF
 
         stage("Scan image and publish result") {
             steps {
-                sh 'trivy image --format template --template "/usr/local/trivy/contrib/html.tpl" -o trivy-backend1.html ${BACKEND1_IMG}'
-                sh 'trivy image --format template --template "/usr/local/trivy/contrib/html.tpl" -o trivy-backend2.html ${BACKEND2_IMG}'
-                sh 'trivy image --format template --template "/usr/local/trivy/contrib/html.tpl" -o trivy-nginx.html ${NGINX_IMG}'
+                sh 'trivy image --format template --template "@/usr/local/trivy/contrib/html.tpl" -o trivy-backend1.html ${BACKEND1_IMG}'
+                sh 'trivy image --format template --template "@/usr/local/trivy/contrib/html.tpl" -o trivy-backend2.html ${BACKEND2_IMG}'
+                sh 'trivy image --format template --template "@/usr/local/trivy/contrib/html.tpl" -o trivy-nginx.html ${NGINX_IMG}'
 
             publishHTML(target: [
                 reportDir: './',
                 reportFiles: 'trivy-backend1.html',
-                reportName: 'trivy-report',
+                reportName: 'trivy-report-backend1',
                 allowMissing: false
             ])
 
             publishHTML(target: [
                 reportDir: './',
                 reportFiles: 'trivy-backend2.html',
-                reportName: 'trivy-report',
+                reportName: 'trivy-report-backend2',
                 allowMissing: false
             ])
 
             publishHTML(target: [
                 reportDir: './',
                 reportFiles: 'trivy-nginx.html',
-                reportName: 'trivy-report',
+                reportName: 'trivy-report-nginx',
                 allowMissing: false
             ])
 
