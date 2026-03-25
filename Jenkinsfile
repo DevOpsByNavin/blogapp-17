@@ -143,12 +143,13 @@ EOF
 
         stage("Scan image and publish result") {
             steps {
-                sh "trivy image --format table -o backend1.html ${BACKEND1_IMG}"
+                sh "trivy image --format table -o trivy-backend1.html ${BACKEND1_IMG}"
 
             publishHTML(target: [
+                reportDir: './'
                 reportFiles: 'backend1.html',
                 reportName: 'trivy-report',
-                allowMissing: true
+                allowMissing: false
             ])
 
             }
